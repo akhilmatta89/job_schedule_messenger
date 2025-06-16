@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime, timedelta
+
+import functionality.trigger_job
 from functionality.initializer import TriggerIntializer
 
 app = Flask(__name__)
@@ -17,11 +19,11 @@ def index():
             # Here you can add scheduling logic
         elif 'trigger_now' in request.form:
             flash("Triggered manually!", "info")
-            trigger = TriggerIntializer(path="/Users/akhilmatta/PycharmProjects/job_reminder/", file_name="test.xlsx")
+            trigger = TriggerIntializer(path="C:\\Users\\DELL\\Desktop\\job_schedule_messenger\\", file_name="test.csv")
             file_handler = trigger.init_trigger()
-            file_handler.read_and_convert_content_to_dataframe()
-
-            # Add immediate trigger logic here
+            df = file_handler.read_and_convert_content_to_dataframe()
+            fp = functionality.trigger_job.TriggerJob()
+            fp.send_message(df)
 
         return redirect(url_for('index'))
 
@@ -29,4 +31,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

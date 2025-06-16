@@ -10,7 +10,7 @@ class FileOps:
 
     def read_and_convert_content_to_dataframe(self):
         try:
-            df = pd.read_excel(self.path + self.file_name)  # skip problematic rows
+            df = pd.read_csv(self.path + self.file_name, header=0, on_bad_lines='skip')
             return df
         except Exception as e:
             print(f"Error converting content to DataFrame: {e}")
