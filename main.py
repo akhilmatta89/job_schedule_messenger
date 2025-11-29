@@ -19,7 +19,7 @@ def index():
             # Here you can add scheduling logic
         elif 'trigger_now' in request.form:
             flash("Triggered manually!", "info")
-            trigger = TriggerIntializer(path="C:\\Users\\DELL\\Desktop\\job_schedule_messenger\\", file_name="test.csv")
+            trigger = TriggerIntializer(path="C:\\Users\\DELL\\Desktop\\github_repos\\job_schedule_messenger\\", file_name="test.csv")
             file_handler = trigger.init_trigger()
             df = file_handler.read_and_convert_content_to_dataframe()
             fp = functionality.trigger_job.TriggerJob()
