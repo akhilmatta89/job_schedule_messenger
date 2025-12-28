@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime, timedelta
-
+import os
 import functionality.trigger_job
 from functionality.initializer import TriggerIntializer
 
@@ -19,7 +19,7 @@ def index():
             # Here you can add scheduling logic
         elif 'trigger_now' in request.form:
             flash("Triggered manually!", "info")
-            trigger = TriggerIntializer(path="C:\\Users\\DELL\\Desktop\\github_repos\\job_schedule_messenger\\", file_name="test.csv")
+            trigger = TriggerIntializer(path=os.getenv("CSVFILE_PATH")+"/", file_name="test.csv")
             file_handler = trigger.init_trigger()
             df = file_handler.read_and_convert_content_to_dataframe()
             fp = functionality.trigger_job.TriggerJob()
@@ -31,4 +31,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
